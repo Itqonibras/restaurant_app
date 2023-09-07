@@ -65,11 +65,6 @@ class RestaurantProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  getQuery() {
-    String value = query;
-    return value;
-}
-
   refresh() {
     _fetchRestaurant(query);
     notifyListeners();

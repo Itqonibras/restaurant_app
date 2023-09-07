@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app/data/api/api_service.dart';
-import 'package:restaurant_app/data/model/restaurant_model.dart';
 import 'package:restaurant_app/provider/restaurant_provider.dart';
+import 'package:restaurant_app/widget/no_data_widget.dart';
 import 'package:restaurant_app/widget/no_internet_widget.dart';
-
 import '../widget/custom_card_small.dart';
 import '../widget/custom_card_big.dart';
+
+String text = '';
 
 class HomePage extends StatelessWidget {
   static const routeName = 'home-page';
@@ -36,7 +36,8 @@ class HomePage extends StatelessWidget {
                   hintText: 'Search',
                   suffixIcon: Icon(Icons.search_rounded),
                 ),
-                onChanged: (value) {
+                onSubmitted: (value) {
+                  text = value;
                   Provider.of<RestaurantProvider>(context, listen: false)
                       .setQuery(value);
                 },
@@ -55,7 +56,9 @@ class HomePage extends StatelessWidget {
                 return const Expanded(child: Center(child: NoInternetWidget()));
               } else if (state.state == ResultState.hasData) {
                 return HomeScreenBody(state: state);
-              } else {
+              } else if (state.state == ResultState.noData) {
+                return const Expanded(child: Center(child: NoDataWidget()));
+              }else {
                 return const Text('');
               }
             },
@@ -76,7 +79,11 @@ class HomeScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MainBody(state: state);
+    if (text == '') {
+      return MainBody(state: state);
+    } else {
+      return SearchBody(state: state);
+    }
   }
 }
 
@@ -135,6 +142,39 @@ class MainBody extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
               child: Text('All restaurant',
+                  style: Theme.of(context).textTheme.titleLarge),
+            ),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: state.result.restaurants!.length,
+              itemBuilder: (context, index) {
+                var restaurant = state.result.restaurants![index];
+                return CustomCardSmall(restaurant: restaurant);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SearchBody extends StatelessWidget {
+  final RestaurantProvider state;
+
+  const SearchBody({super.key, required this.state});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
+              child: Text('Search result',
                   style: Theme.of(context).textTheme.titleLarge),
             ),
             ListView.builder(
