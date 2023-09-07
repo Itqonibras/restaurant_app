@@ -5,6 +5,9 @@ import 'package:restaurant_app/data/model/restaurant_model.dart';
 import 'package:restaurant_app/provider/restaurant_provider.dart';
 import 'package:restaurant_app/widget/no_internet_widget.dart';
 
+import '../widget/custom_card_small.dart';
+import '../widget/custom_card_big.dart';
+
 class HomePage extends StatelessWidget {
   static const routeName = 'home-page';
 
@@ -24,15 +27,19 @@ class HomePage extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
             child: Material(
               borderRadius: BorderRadius.circular(15),
               elevation: 2,
               child: TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Search',
                   suffixIcon: Icon(Icons.search_rounded),
                 ),
+                onChanged: (value) {
+                  Provider.of<RestaurantProvider>(context, listen: false)
+                      .setQuery(value);
+                },
               ),
             ),
           ),
@@ -69,7 +76,18 @@ class HomeScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size.width;
+    return MainBody(state: state);
+  }
+}
+
+class MainBody extends StatelessWidget {
+  final RestaurantProvider state;
+
+  const MainBody({super.key, required this.state});
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     final youMayLike = pickRandomItemsAsList(state.result.restaurants!, 3);
     return Expanded(
       child: SingleChildScrollView(
@@ -81,89 +99,55 @@ class HomeScreenBody extends StatelessWidget {
               child: Text('You may like',
                   style: Theme.of(context).textTheme.titleLarge),
             ),
-            SizedBox(
-              height: (3 * (screenSize - 36)) / 4,
-              child: SingleChildScrollView(
-                clipBehavior: Clip.none,
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    const SizedBox(width: 12),
-                    ListView.separated(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      clipBehavior: Clip.none,
-                      itemCount: youMayLike.length,
-                      itemBuilder: (context, index) {
-                        var restaurant = youMayLike[index];
-                        return YouMayLikeCard(
-                          restaurant: restaurant,
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const SizedBox(width: 12);
-                      },
-                    ),
-                    const SizedBox(width: 12),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class YouMayLikeCard extends StatelessWidget {
-  final Restaurant restaurant;
-
-  const YouMayLikeCard({super.key, required this.restaurant});
-
-  @override
-  Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size.width;
-    return InkWell(
-      onTap: () {},
-      child: Material(
-        elevation: 5,
-        borderRadius: BorderRadius.circular(15),
-        child: Stack(children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: Container(
-              width: screenSize - 36,
-              height: (3 * (screenSize - 36)) / 4,
-              color: const Color(0xFFFFFFFF),
-            ),
-          ),
-          Column(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: SizedBox(
-                  width: screenSize - 36,
-                  height: (9 * (screenSize - 36)) / 16,
-                  child: Image.network(
-                    ApiService().mediumImage(restaurant.pictureId!),
-                    fit: BoxFit.fitWidth,
+            Padding(
+              padding: const EdgeInsets.only(top: 6, bottom: 6),
+              child: SizedBox(
+                height: (3 * (screenWidth - 36)) / 4,
+                child: SingleChildScrollView(
+                  clipBehavior: Clip.none,
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 12),
+                      ListView.separated(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        clipBehavior: Clip.none,
+                        itemCount: youMayLike.length,
+                        itemBuilder: (context, index) {
+                          var restaurant = youMayLike[index];
+                          return CustomCardBig(
+                            restaurant: restaurant,
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const SizedBox(width: 12);
+                        },
+                      ),
+                      const SizedBox(width: 12),
+                    ],
                   ),
                 ),
               ),
-              SizedBox(
-                width: screenSize - 36,
-                height: (3 * (screenSize - 36)) / 16,
-                child: ListTile(
-                  title: Text(restaurant.name!),
-                  subtitle: Text(restaurant.city!),
-                  trailing: Icon(Icons.star_rate_rounded),
-                ),
-              ),
-            ],
-          ),
-        ]),
+            ),
+            // const SizedBox(height: 8.0),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
+              child: Text('All restaurant',
+                  style: Theme.of(context).textTheme.titleLarge),
+            ),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: state.result.restaurants!.length,
+              itemBuilder: (context, index) {
+                var restaurant = state.result.restaurants![index];
+                return CustomCardSmall(restaurant: restaurant);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
