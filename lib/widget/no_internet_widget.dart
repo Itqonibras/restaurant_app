@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app/page/home_page.dart';
 import 'package:restaurant_app/provider/restaurant_provider.dart';
 
 class NoInternetWidget extends StatelessWidget {

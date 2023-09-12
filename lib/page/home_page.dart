@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
             child: Material(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(10),
               elevation: 2,
               child: TextField(
                 decoration: const InputDecoration(
@@ -98,6 +98,7 @@ class MainBody extends StatelessWidget {
     final youMayLike = pickRandomItemsAsList(state.result.restaurants!, 3);
     return Expanded(
       child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -111,6 +112,7 @@ class MainBody extends StatelessWidget {
               child: SizedBox(
                 height: (3 * (screenWidth - 36)) / 4,
                 child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
                   clipBehavior: Clip.none,
                   scrollDirection: Axis.horizontal,
                   child: Row(

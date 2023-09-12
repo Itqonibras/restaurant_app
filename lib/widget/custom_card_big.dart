@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/page/detail_page.dart';
 import '../data/api/api_service.dart';
-import '../data/model/restaurant_model.dart';
 
 class CustomCardBig extends StatelessWidget {
   final dynamic restaurant;
@@ -11,14 +11,16 @@ class CustomCardBig extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, DetailPage.routeName, arguments: restaurant.id);
+      },
       child: Material(
-        elevation: 5,
-        borderRadius: BorderRadius.circular(15),
+        elevation: 2,
+        borderRadius: BorderRadius.circular(10),
         child: Stack(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(10),
               child: Container(
                 width: screenWidth - 36,
                 height: (3 * (screenWidth - 36)) / 4,
@@ -28,7 +30,7 @@ class CustomCardBig extends StatelessWidget {
             Column(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(10),
                   child: SizedBox(
                     width: screenWidth - 36,
                     height: (9 * (screenWidth - 36)) / 16,
