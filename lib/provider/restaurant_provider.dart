@@ -24,7 +24,7 @@ class RestaurantProvider extends ChangeNotifier {
 
   ResultState get state => _state;
 
-  Future<dynamic> _fetchRestaurant(query) async {
+  Future<void> _fetchRestaurant(query) async {
     try {
       _state = ResultState.loading;
       notifyListeners();
@@ -33,28 +33,28 @@ class RestaurantProvider extends ChangeNotifier {
         if (restaurant.restaurants!.isEmpty) {
           _state = ResultState.noData;
           notifyListeners();
-          return _message = 'Empty data';
+          _message = 'Empty data';
         } else {
           _state = ResultState.hasData;
           notifyListeners();
-          return _restaurantResult = restaurant;
+          _restaurantResult = restaurant;
         }
       } else {
         final restaurant = await apiService.restaurantSearch(query);
         if (restaurant.restaurants!.isEmpty) {
           _state = ResultState.noData;
           notifyListeners();
-          return _message = 'Empty data';
+          _message = 'Empty data';
         } else {
           _state = ResultState.hasData;
           notifyListeners();
-          return _restaurantResult = restaurant;
+          _restaurantResult = restaurant;
         }
       }
     } catch (e) {
       _state = ResultState.error;
       notifyListeners();
-      return _message = 'Error -> $e';
+      _message = 'Error -> $e';
     }
   }
 

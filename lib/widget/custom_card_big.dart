@@ -12,7 +12,8 @@ class CustomCardBig extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, DetailPage.routeName, arguments: restaurant.id);
+        Navigator.pushNamed(context, DetailPage.routeName,
+            arguments: restaurant.id);
       },
       child: Material(
         elevation: 2,
@@ -37,6 +38,11 @@ class CustomCardBig extends StatelessWidget {
                     child: Image.network(
                       ApiService().mediumImage(restaurant.pictureId!),
                       fit: BoxFit.fitWidth,
+                      errorBuilder: (context, exception, _) {
+                        return const Center(
+                          child: Text('No Image'),
+                        );
+                      },
                     ),
                   ),
                 ),
