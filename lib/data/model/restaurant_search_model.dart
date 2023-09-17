@@ -1,7 +1,9 @@
+import 'package:restaurant_app/data/model/restaurant_model.dart';
+
 class RestaurantSearchResult {
   bool? error;
   num? founded;
-  List<RestaurantSearch>? restaurants;
+  List<Restaurant>? restaurants;
 
   RestaurantSearchResult({this.error, this.founded, this.restaurants});
 
@@ -9,36 +11,10 @@ class RestaurantSearchResult {
     error = json['error'];
     founded = json['founded'];
     if (json['restaurants'] != null) {
-      restaurants = <RestaurantSearch>[];
+      restaurants = <Restaurant>[];
       json['restaurants'].forEach((v) {
-        restaurants!.add(RestaurantSearch.fromJson(v));
+        restaurants!.add(Restaurant.fromJson(v));
       });
     }
-  }
-}
-
-class RestaurantSearch {
-  String? id;
-  String? name;
-  String? description;
-  String? pictureId;
-  String? city;
-  num? rating;
-
-  RestaurantSearch(
-      {this.id,
-        this.name,
-        this.description,
-        this.pictureId,
-        this.city,
-        this.rating});
-
-  RestaurantSearch.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    description = json['description'];
-    pictureId = json['pictureId'];
-    city = json['city'];
-    rating = json['rating'];
   }
 }
