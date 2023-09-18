@@ -14,6 +14,13 @@ final myAppTheme = ThemeData(
 
   textTheme: myTextTheme,
 
+  snackBarTheme: const SnackBarThemeData(
+    backgroundColor: Color(0xFFFFFFFF),
+    contentTextStyle: TextStyle(
+      color: Colors.black,
+    ),
+  ),
+
   scaffoldBackgroundColor: primaryColor,
 
   inputDecorationTheme: InputDecorationTheme(

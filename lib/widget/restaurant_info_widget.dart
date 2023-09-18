@@ -24,7 +24,10 @@ class RestaurantInfo extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.location_on_rounded),
+                    const Icon(
+                      Icons.location_on_rounded,
+                      color: Colors.redAccent,
+                    ),
                     Text(
                       restaurantDetail.city!,
                       style: Theme.of(context).textTheme.labelLarge,
@@ -42,7 +45,10 @@ class RestaurantInfo extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.star_rate_rounded),
+                    const Icon(
+                      Icons.star_rate_rounded,
+                      color: Colors.orangeAccent,
+                    ),
                     Text(
                       restaurantDetail.rating.toString(),
                       style: Theme.of(context).textTheme.labelLarge,

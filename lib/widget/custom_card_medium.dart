@@ -16,20 +16,17 @@ class CustomCardMedium extends StatelessWidget {
           color: const Color(0xFFFFFFFF),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 132,
-                    height: 152,
-                    color: const Color(0xFFE7E7E7),
-                    child: Image.asset(
-                      'assets/images/foodanddrink.png',
-                      scale: 5,
-                      color: const Color(0xFFCECECE),
-                    ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  alignment: Alignment.center,
+                  width: 140,
+                  height: 160,
+                  color: const Color(0xFFE7E7E7),
+                  child: Image.asset(
+                    'assets/images/foodanddrink.png',
+                    scale: 5,
+                    color: const Color(0xFFCECECE),
                   ),
                 ),
               ),

@@ -43,4 +43,15 @@ class Restaurant {
     city = json['city'];
     rating = json['rating'];
   }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['description'] = description;
+    data['pictureId'] = pictureId;
+    data['city'] = city;
+    data['rating'] = rating;
+    return data;
+  }
 }

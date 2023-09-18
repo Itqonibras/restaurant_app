@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:restaurant_app/widget/fav_button.dart';
 import '../data/api/api_service.dart';
-import '../data/model/restaurant_detail_model.dart';
+import '../data/model/restaurant_model.dart';
 
 class DetailHeader extends StatelessWidget {
-  final RestaurantDetail restaurantDetail;
+  final Restaurant restaurant;
 
-  const DetailHeader({super.key, required this.restaurantDetail});
+  const DetailHeader({super.key, required this.restaurant});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class DetailHeader extends StatelessWidget {
               width: screenWidth - 12,
               height: (screenWidth - 12) / 2,
               child: Image.network(
-                ApiService().largeImage(restaurantDetail.pictureId),
+                ApiService().largeImage(restaurant.pictureId),
                 fit: BoxFit.fitWidth,
               ),
             ),
@@ -48,14 +49,20 @@ class DetailHeader extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    restaurantDetail.name!,
-                    style: GoogleFonts.hind(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 0.10,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        restaurant.name!,
+                        style: GoogleFonts.hind(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 0.10,
+                        ),
+                      ),
+                      FavButton(restaurant: restaurant),
+                    ],
                   ),
                 ),
               ),

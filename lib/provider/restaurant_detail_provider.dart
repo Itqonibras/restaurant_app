@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:restaurant_app/provider/result_state.dart';
 import '../data/api/api_service.dart';
 import '../data/model/restaurant_detail_model.dart';
-import 'restaurant_provider.dart';
 
 class RestaurantDetailProvider extends ChangeNotifier {
   final ApiService apiService;

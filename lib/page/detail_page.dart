@@ -4,7 +4,8 @@ import 'package:restaurant_app/data/model/restaurant_detail_model.dart';
 import 'package:restaurant_app/provider/restaurant_detail_provider.dart';
 import 'package:restaurant_app/widget/expandable_description.dart';
 import '../data/api/api_service.dart';
-import '../provider/restaurant_provider.dart';
+import '../data/model/restaurant_model.dart';
+import '../provider/result_state.dart';
 import '../widget/detail_header.dart';
 import '../widget/menu_widget.dart';
 import '../widget/restaurant_info_widget.dart';
@@ -12,14 +13,14 @@ import '../widget/restaurant_info_widget.dart';
 class DetailPage extends StatelessWidget {
   static const routeName = 'detail-page';
 
-  final String id;
+  final Restaurant restaurant;
 
-  const DetailPage({super.key, required this.id});
+  const DetailPage({super.key, required this.restaurant});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => RestaurantDetailProvider(apiService: ApiService(), id: id),
+      create: (_) => RestaurantDetailProvider(apiService: ApiService(), id: restaurant.id!),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Restaurant Detail'),
@@ -30,14 +31,16 @@ class DetailPage extends StatelessWidget {
             icon: const Icon(Icons.chevron_left),
           ),
         ),
-        body: const DetailPageConsumer(),
+        body: DetailPageConsumer(restaurant: restaurant),
       ),
     );
   }
 }
 
 class DetailPageConsumer extends StatelessWidget {
-  const DetailPageConsumer({super.key});
+  final Restaurant restaurant;
+
+  const DetailPageConsumer({super.key, required this.restaurant});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +51,10 @@ class DetailPageConsumer extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (state.state == ResultState.hasData) {
-          return DetailPageBody(restaurant: state.result.restaurant!);
+          return DetailPageBody(
+            restaurantDetail: state.result.restaurant!,
+            restaurant: restaurant,
+          );
         } else if (state.state == ResultState.noData) {
           return Center(
             child: Text(state.message),
@@ -66,9 +72,15 @@ class DetailPageConsumer extends StatelessWidget {
 }
 
 class DetailPageBody extends StatelessWidget {
-  final RestaurantDetail restaurant;
+  final Restaurant restaurant;
 
-  const DetailPageBody({super.key, required this.restaurant});
+  final RestaurantDetail restaurantDetail;
+
+  const DetailPageBody({
+    super.key,
+    required this.restaurantDetail,
+    required this.restaurant,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -79,11 +91,11 @@ class DetailPageBody extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
-            child: DetailHeader(restaurantDetail: restaurant),
+            child: DetailHeader(restaurant: restaurant),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
-            child: RestaurantInfo(restaurantDetail: restaurant),
+            child: RestaurantInfo(restaurantDetail: restaurantDetail),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
@@ -94,7 +106,7 @@ class DetailPageBody extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
-            child: ExpandableDescription(text: restaurant.description!),
+            child: ExpandableDescription(text: restaurantDetail.description!),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
@@ -106,7 +118,7 @@ class DetailPageBody extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 6, bottom: 6),
             child: MenuWidget(
-              restaurantDetail: restaurant,
+              restaurantDetail: restaurantDetail,
               menuType: 'Foods',
             ),
           ),
@@ -120,7 +132,7 @@ class DetailPageBody extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 6, bottom: 6),
             child: MenuWidget(
-              restaurantDetail: restaurant,
+              restaurantDetail: restaurantDetail,
               menuType: 'Drinks',
             ),
           ),

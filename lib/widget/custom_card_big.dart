@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/data/model/restaurant_model.dart';
 import 'package:restaurant_app/page/detail_page.dart';
 import '../data/api/api_service.dart';
 
 class CustomCardBig extends StatelessWidget {
-  final dynamic restaurant;
+  final Restaurant restaurant;
 
   const CustomCardBig({super.key, required this.restaurant});
 
@@ -12,8 +13,11 @@ class CustomCardBig extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, DetailPage.routeName,
-            arguments: restaurant.id);
+        Navigator.pushNamed(
+          context,
+          DetailPage.routeName,
+          arguments: restaurant,
+        );
       },
       child: Material(
         elevation: 2,
@@ -72,7 +76,10 @@ class CustomCardBig extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(restaurant.rating.toString()),
-                            const Icon(Icons.star_rate_rounded),
+                            const Icon(
+                              Icons.star_rate_rounded,
+                              color: Colors.orangeAccent,
+                            ),
                           ],
                         ),
                       ],

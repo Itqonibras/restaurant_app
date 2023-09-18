@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/data/model/restaurant_model.dart';
 import '../data/api/api_service.dart';
 import '../page/detail_page.dart';
 
 class CustomCardSmall extends StatelessWidget {
-  final dynamic restaurant;
+  final Restaurant restaurant;
 
   const CustomCardSmall({super.key, required this.restaurant});
 
@@ -14,7 +15,11 @@ class CustomCardSmall extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, DetailPage.routeName, arguments: restaurant.id);
+          Navigator.pushNamed(
+            context,
+            DetailPage.routeName,
+            arguments: restaurant,
+          );
         },
         child: Material(
           elevation: 2,
@@ -62,7 +67,10 @@ class CustomCardSmall extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(restaurant.rating.toString()),
-                              const Icon(Icons.star_rate_rounded)
+                              const Icon(
+                                Icons.star_rate_rounded,
+                                color: Colors.orangeAccent,
+                              )
                             ],
                           ),
                         ],
