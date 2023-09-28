@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/data/model/restaurant_model.dart';
 import 'package:restaurant_app/page/detail_page.dart';
 import '../data/api/api_service.dart';
@@ -13,11 +14,7 @@ class CustomCardBig extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          DetailPage.routeName,
-          arguments: restaurant,
-        );
+        Navigation.intentWithData(DetailPage.routeName, restaurant);
       },
       child: Material(
         elevation: 2,

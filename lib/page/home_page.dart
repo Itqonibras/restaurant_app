@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:restaurant_app/provider/restaurant_provider.dart';
 import 'package:restaurant_app/widget/no_data_widget.dart';
 import 'package:restaurant_app/widget/no_internet_widget.dart';
-import '../provider/result_state.dart';
+import '../utils/result_state.dart';
 import '../widget/custom_card_small.dart';
 import '../widget/custom_card_big.dart';
 

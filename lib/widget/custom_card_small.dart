@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/data/model/restaurant_model.dart';
 import '../data/api/api_service.dart';
 import '../page/detail_page.dart';
@@ -15,11 +16,7 @@ class CustomCardSmall extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(
-            context,
-            DetailPage.routeName,
-            arguments: restaurant,
-          );
+          Navigation.intentWithData(DetailPage.routeName, restaurant);
         },
         child: Material(
           elevation: 2,

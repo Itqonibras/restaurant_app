@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:restaurant_app/data/model/restaurant_model.dart';
-import 'package:restaurant_app/provider/result_state.dart';
+import 'package:restaurant_app/utils/result_state.dart';
 import '../data/db/database_helper.dart';
 
 class DatabaseProvider extends ChangeNotifier {

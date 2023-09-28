@@ -17,6 +17,17 @@ class RestaurantResult {
       });
     }
   }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['error'] = error;
+    data['message'] = message;
+    data['count'] = count;
+    if (restaurants != null) {
+      data['restaurants'] = restaurants!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
 class Restaurant {

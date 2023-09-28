@@ -3,9 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/model/restaurant_detail_model.dart';
 import 'package:restaurant_app/provider/restaurant_detail_provider.dart';
 import 'package:restaurant_app/widget/expandable_description.dart';
+import '../common/navigation.dart';
 import '../data/api/api_service.dart';
 import '../data/model/restaurant_model.dart';
-import '../provider/result_state.dart';
+import '../utils/result_state.dart';
 import '../widget/detail_header.dart';
 import '../widget/menu_widget.dart';
 import '../widget/restaurant_info_widget.dart';
@@ -26,7 +27,7 @@ class DetailPage extends StatelessWidget {
           title: const Text('Restaurant Detail'),
           leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigation.back();
             },
             icon: const Icon(Icons.chevron_left),
           ),
